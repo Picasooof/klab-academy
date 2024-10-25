@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Clone</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f2ef;
+            color: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            padding: 0 20px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            max-width: 1128px;
+            width: 100%;
+        }
+
+        .linkedin-logo {
+            color: #0a66c2;
+            font-size: 2.2rem;
+            margin-right: 8px;
+        }
+
+        .search-box {
+            background-color: #eef3f8;
+            padding: 0 8px;
+            display: flex;
+            align-items: center;
+            border-radius: 4px;
+            margin-right: auto;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            height: 34px;
+            width: 280px;
+            padding: 0 8px;
+            outline: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 12px;
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 0.75rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 3px;
+        }
+
+        .nav-item:hover {
+            color: rgba(0, 0, 0, 0.9);
+        }
+
+        .profile-mini {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-bottom: 3px;
+        }
+
+        /* Main Content */
+        .main-container {
+            max-width: 1128px;
+            margin: 72px auto 0;
+            display: grid;
+            grid-template-columns: 225px 555px 300px;
+            gap: 24px;
+            padding: 0 20px;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .profile-background {
+            height: 54px;
+            background: linear-gradient(to right, #0a66c2, #0084bf);
+        }
+
+        .profile-info {
+            text-align: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-photo {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 2px solid white;
+            margin-top: -38px;
+        }
+
+        .profile-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 12px 0 4px;
+        }
+
+        .profile-headline {
+            font-size: 0.75rem;
+            color: rgba(0, 0, 0, 0.6);
+            padding: 0 12px;
+        }
+
+        .profile-stats {
+            padding: 12px;
+            font-size: 0.75rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        /* Post Creation */
+        .post-creation {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 16px;
+            margin-bottom: 8px;
+        }
+
+        .post-input {
+            display: flex;
+            gap: 8px;
+        }
+
+        .post-input img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+
+        .post-button {
+            flex: 1;
+            background-color: rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            border-radius: 35px;
+            padding: 12px;
+            text-align: left;
+            color: rgba(0, 0, 0, 0.6);
+            cursor: pointer;
+        }
+
+        .post-actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 8px;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .post-action:hover {
+            background-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* Feed Post */
+        .feed-post {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            margin-bottom: 8px;
+            padding: 12px;
+        }
+
+        .post-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .post-user img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+
+        .post-user-info h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .post-user-info p {
+            font-size: 0.75rem;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .post-content {
+            font-size: 0.875rem;
+            margin-bottom: 12px;
+        }
+
+        .post-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .post-engagement {
+            font-size: 0.75rem;
+            color: rgba(0, 0, 0, 0.6);
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .post-buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 4px 0;
+        }
+
+        .post-button-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .post-button-item:hover {
+            background-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* News Section */
+        .news-section {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 12px;
+        }
+
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .news-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .news-item {
+            display: flex;
+            gap: 8px;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .news-item:hover {
+            background-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .news-bullet {
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .news-content {
+            flex: 1;
+        }
+
+        .news-title {
+            font-size: 0.875rem;
+            margin-bottom: 4px;
+        }
+
+        .news-meta {
+            font-size: 0.75rem;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <i class="fab fa-linkedin linkedin-logo"></i>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-user-friends"></i>
+                    <span>Network</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-briefcase"></i>
+                    <span>Jobs</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Messaging</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </div>
+                <div class="nav-item">
+                    <img src="IMG_20230228_135644.jpg" alt="Profile" class="profile-mini">
+                    <span>Me</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Left Sidebar - Profile Card -->
+        <div class="left-sidebar">
+            <div class="profile-card">
+                <div class="profile-background"></div>
+                <div class="profile-info">
+                    <img src="IMG-20230303-WA0018.jpg" alt="Profile" class="profile-photo">
+                    <h2 class="profile-name">Pascal</h2>
+                    <p class="profile-headline">Software Developer | Web Development | UI/UX Design</p>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span>Who's viewed your profile</span>
+                        <span>47</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Impressions of your post</span>
+                        <span>238</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Feed -->
+        <div class="main-feed">
+            <!-- Post Creation -->
+            <div class="post-creation">
+                <div class="post-input">
+                    <img src="IMG-20230303-WA0018.jpg" alt="Profile">
+                    <button class="post-button">Start a post</button>
+                </div>
+                <div class="post-actions">
+                    <div class="post-action">
+                        <i class="fas fa-image" style="color: #70b5f9;"></i>
+                        <span>Photo</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-video" style="color: #7fc15e;"></i>
+                        <span>Video</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-calendar-alt" style="color: #e7a33e;"></i>
+                        <span>Event</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-newspaper" style="color: #fc9295;"></i>
+                        <span>Write article</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feed Posts -->
+            <div class="feed-post">
+                <div class="post-header">
+                    <div class="post-user">
+                        <img src="IMG_20230228_135644.jpg" alt="User">
+                    </div>
+                    <div class="post-user-info">
+                        <h4>Ndayishimiye Pascal</h4>
+                        <p>Junior Software Engineer at Tech Company</p>
+                        <p>2h • <i class="fas fa-globe-americas"></i></p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>Excited to share that I've just completed a major project using React and Node.js! #webdevelopment #coding</p>
+                </div>
+                <img src="pexels-photo-965345.jpeg" alt="Post image" class="post-image">
+                <div class="post-engagement">
+                    <span>1,234 reactions • 56 comments</span>
+                </div>
+                <div class="post-buttons">
+                    <div class="post-button-item">
+                        <i class="far fa-thumbs-up"></i>
+                        <span>Like</span>
+                    </div>
+                    <div class="post-button-item">
+                        <i class="far fa-comment"></i>
+                        <span>Comment</span>
+                    </div>
+                    <div class="post-button-item">
+                        <i class="fas fa-share"></i>
+                        <span>Share</span>
+                    </div>
+                    <div class="post-button-item">
+                        <i class="far fa-paper-plane"></i>
+                        <span>Send</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar - News -->
+        <div class="right-sidebar">
+            <div class="news-section">
+                <div class="news-header">
+                    <h3>LinkedIn News</h3>
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="news-item">
+                    <span class="news-bullet">•</span>
+                    <div class="news-content">
+                        <div class="news-title">Tech industry sees rapid growth</div>
+                        <div class="news-meta">1d ago
